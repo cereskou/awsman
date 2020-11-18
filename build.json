@@ -1,0 +1,16 @@
+{
+    "Major": 1,
+    "Minor": 0,
+    "Patch": 0,
+    "Build": 9,
+    "Date": "2020/10/22",
+    "Time": "12:00:00",
+    "CompanyName": "株式会社ディットテクノロジー",
+    "FileDescription": "AWS Assistant",
+    "InternalName": "awsman",
+    "LegalCopyright": "Copyright (C) 2020 Ditto Technology Co., Ltd.",
+    "OriginalFilename": "awsman.exe",
+    "ProductName": "awsman",
+    "IconPath": "",
+    "ManifestPath": ""
+}
