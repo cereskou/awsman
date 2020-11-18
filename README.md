@@ -22,3 +22,4 @@ support rest api. please check section swagger.
 
 ## Swagger
 http://localhost:4000/swagger/index.html
+![swagger](https://github.com/cereskou/awsman/blob/main/docs/images/swagger.png)
