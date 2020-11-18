@@ -18,3 +18,5 @@ AWS Assistant written in go
 1. gorm
 1. AWS SDK
 
+## Swagger
+http://localhost:4000/swagger/index.html
