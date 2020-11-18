@@ -1,6 +1,7 @@
 # awsman
 AWS Assistant written in go
 
+## in development
 
 ## Run as a web server
 
