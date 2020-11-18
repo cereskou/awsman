@@ -1,0 +1,32 @@
+{
+    "Host": "localhost",
+    "Port": 4000,
+    "LogLevel": "trace",
+    "LogOutput": "both",
+    "LogFormat": "awsman.log",
+    "LogDir": "",
+    "Avatar": "assets/images/avatar.png",
+    "aws": {
+        "access_key": "",
+        "secret_access_key": "",
+        "region": "ap-northeast-1",
+        "retry": 3
+    },
+    "account": {
+        "name": "admin",
+        "password": "123456",
+        "avatar": "assets/images/avatar.png",
+        "expires": 12
+    },
+    "rsa": {
+        "private": "private.pem",
+        "public": "public.pem"
+    },
+    "db": {
+        "Name": "awsman.db",
+        "AutoVacuum": true
+    },
+    "cognito": {
+        "userpoolid": ""
+    }  
+}
