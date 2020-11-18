@@ -1,0 +1,577 @@
+basePath: /
+definitions:
+  api.HTTPError:
+    properties:
+      message:
+        type: object
+    type: object
+  api.Response:
+    properties:
+      code:
+        type: integer
+      data:
+        type: object
+    type: object
+  model.CognitoUser:
+    properties:
+      createdate:
+        type: integer
+      email:
+        type: string
+      enabled:
+        type: boolean
+      group:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      status:
+        type: string
+      sub:
+        type: string
+      updatedate:
+        type: integer
+      userpoolid:
+        type: string
+      uuid:
+        type: string
+    type: object
+  model.User:
+    properties:
+      avatar:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      roles:
+        items:
+          type: string
+        type: array
+    type: object
+  web.Login:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+host: localhost:4000
+info:
+  contact: {}
+  description: AWSサーバー管理用
+  license:
+    name: ditto.co.jp
+    url: https://www.ditto.co.jp
+  title: AWS Management
+  version: "1.0"
+paths:
+  /cloudtrail/events:
+    get:
+      consumes:
+      - application/json
+      description: イベント取得
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      security:
+      - ApiKeyAuth: []
+      summary: イベント取得
+      tags:
+      - CloudTrail
+  /code/codecommit/repositories:
+    get:
+      consumes:
+      - application/json
+      description: リポジトリ一覧取得
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      security:
+      - ApiKeyAuth: []
+      summary: リポジトリ一覧取得
+      tags:
+      - CodeCommit
+  /cognito/setpassword/{uuid}:
+    post:
+      description: パスワードリセット通知
+      parameters:
+      - description: uuid
+        in: path
+        name: uuid
+        required: true
+        type: string
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.CognitoUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: パスワードリセット通知
+      tags:
+      - Cognito
+  /cognito/setting:
+    get:
+      description: 設定情報取得
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 設定情報取得
+      tags:
+      - Cognito
+    post:
+      description: 設定情報保存
+      parameters:
+      - description: data
+        in: body
+        name: data
+        schema:
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 設定情報保存
+      tags:
+      - Cognito
+  /cognito/user:
+    post:
+      description: ユーザー情報の新規作成
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.CognitoUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: ユーザー情報の新規作成
+      tags:
+      - Cognito
+  /cognito/user/{uuid}:
+    delete:
+      description: ユーザー情報を削除する
+      parameters:
+      - description: uuid
+        in: path
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: ユーザー情報を削除する
+      tags:
+      - Cognito
+    put:
+      description: ユーザー情報を更新する
+      parameters:
+      - description: uuid
+        in: path
+        name: uuid
+        required: true
+        type: string
+      - description: data
+        in: body
+        name: data
+        schema:
+          $ref: '#/definitions/model.CognitoUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: ユーザー情報を更新する
+      tags:
+      - Cognito
+  /cognito/user/enable/{uuid}:
+    post:
+      description: ユーザーの有効無効
+      parameters:
+      - description: uuid
+        in: path
+        name: uuid
+        required: true
+        type: string
+      - description: string enums
+        enum:
+        - enabled
+        - disabled
+        in: query
+        name: status
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: ユーザーの有効無効
+      tags:
+      - Cognito
+  /cognito/user/list:
+    get:
+      consumes:
+      - application/json
+      description: ユーザー一覧を取得する
+      parameters:
+      - description: Email
+        in: query
+        name: email
+        type: string
+      - description: group
+        in: query
+        name: group
+        type: string
+      - default: 1
+        description: page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: limit
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      security:
+      - ApiKeyAuth: []
+      summary: ユーザー一覧を取得する
+      tags:
+      - Cognito
+  /cognito/user/sync:
+    get:
+      consumes:
+      - application/json
+      description: ユーザー一覧をAWS Cognitoと同期する
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      security:
+      - ApiKeyAuth: []
+      summary: ユーザー一覧をAWS Cognitoと同期する
+      tags:
+      - Cognito
+  /elbv2/listelb:
+    get:
+      consumes:
+      - application/json
+      description: ELB一覧を取得します
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      security:
+      - ApiKeyAuth: []
+      summary: ELB一覧を取得します
+      tags:
+      - ELBV2
+  /elbv2/listeners:
+    get:
+      consumes:
+      - application/json
+      description: リーセンナー一覧取得
+      parameters:
+      - description: LoadBalancerArn
+        in: query
+        name: arn
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      security:
+      - ApiKeyAuth: []
+      summary: リーセンナー一覧取得
+      tags:
+      - ELBV2
+  /elbv2/rules:
+    get:
+      consumes:
+      - application/json
+      description: ルール一覧取得
+      parameters:
+      - description: ListenerArn
+        in: query
+        name: arn
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      security:
+      - ApiKeyAuth: []
+      summary: ルール一覧取得
+      tags:
+      - ELBV2
+  /info:
+    get:
+      consumes:
+      - application/json
+      description: ユーザー情報取得
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      security:
+      - ApiKeyAuth: []
+      summary: ユーザー情報取得
+      tags:
+      - User
+  /user:
+    post:
+      consumes:
+      - application/json
+      description: ユーザー作成
+      parameters:
+      - description: data
+        in: body
+        name: data
+        schema:
+          $ref: '#/definitions/model.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      security:
+      - ApiKeyAuth: []
+      summary: ユーザー作成
+      tags:
+      - User
+  /user/login:
+    post:
+      consumes:
+      - application/json
+      description: ログイン
+      parameters:
+      - description: data
+        in: body
+        name: data
+        schema:
+          $ref: '#/definitions/web.Login'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      summary: ログイン
+      tags:
+      - User
+  /user/logout:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.HTTPError'
+      security:
+      - ApiKeyAuth: []
+      summary: ログアウト
+      tags:
+      - User
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
