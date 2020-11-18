@@ -4,6 +4,7 @@ AWS Assistant written in go
 ## in development
 
 ## Run as a web server
+support rest api. please check section swagger.
 
 ## Features
 1. Cognito
